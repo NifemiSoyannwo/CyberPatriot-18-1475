@@ -34,13 +34,13 @@ A: /home/benjamin/Music/
 
 5 pts each
 
-## Remove admin
+## Remove non-admins
 
 - kbennett
 
 5 pts
 
-## Create user
+## Create users
 
 - mross
 

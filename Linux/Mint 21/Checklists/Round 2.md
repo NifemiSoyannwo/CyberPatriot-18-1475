@@ -61,4 +61,20 @@ A: `rzane` and `shuntley
 
 ? pts
 
+## Enable IPv4 TCP SYN Cookies (FAILED)
 
+? pts
+
+## Enable UFW
+
+5 pts
+
+## Fix insecure permissions on FTP root directory (FAILED)
+
+? pts
+
+## disable OpenSSH (FAILED)
+
+? pts
+
+# 

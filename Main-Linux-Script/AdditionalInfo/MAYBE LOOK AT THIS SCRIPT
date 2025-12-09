@@ -1,0 +1,45 @@
+To create a bash script that would get 100 points on all CyberPatriot Ubuntu 22.04 images, you would need to carefully review the scoring guidelines and requirements for the competition. CyberPatriot is a national youth cyber education program that aims to promote cybersecurity awareness and skills among students. The competition includes a number of challenges that test the participants' ability to secure and maintain a simulated network.
+
+Here is a sample bash script that could be used to get 100 points on CyberPatriot Ubuntu 22.04 images:
+
+#!/bin/bash
+
+# update package index
+apt-get update
+
+# install security updates
+apt-get upgrade -y
+
+# install and configure firewall
+apt-get install ufw -y
+ufw allow 22/tcp
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable
+
+# configure password policies
+apt-get install libpam-cracklib -y
+echo "password    required    pam_cracklib.so retry=3 minlen=8 difok=3" >> /etc/pam.d/common-password
+
+# enable auditing and logging
+apt-get install auditd -y
+sed -i 's/max_log_file_action = keep_logs/max_log_file_action = rotate/' /etc/audit/auditd.conf
+service auditd restart
+
+# configure access controls
+usermod -a -G sudo admin
+chmod 750 /etc/sudoers.d
+chmod 440 /etc/sudoers.d/admin
+
+# conduct security assessments
+apt-get install lynis -y
+lynis audit system
+
+# implement data backup and recovery plan
+apt-get install rsync -y
+mkdir /mnt/backup
+rsync -a /home/ /mnt/backup/
+
+This bash script performs a number of tasks that are commonly required to secure an Ubuntu system, such as installing security updates, configuring a firewall, and implementing password policies. It also includes steps to enable auditing and logging, configure access controls, conduct security assessments, and implement a data backup and recovery plan.
+
+Please note that this is just a sample script, and the specific requirements for getting 100 points on CyberPatriot Ubuntu 22.04 images may vary depending on the individual challenges and scoring criteria for the competition. It is always a good idea to carefully review the guidelines and seek expert advice when preparing for a CyberPatriot competition.

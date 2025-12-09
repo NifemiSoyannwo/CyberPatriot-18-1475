@@ -1,0 +1,92 @@
+GRUB = Grand unified Bootloader
+
+/etc/default/grub  is the main config file
+/etc/grub.d/ this is probably the more useful config file directory
+
+—------------------------ /etc/grub.d/40_custom file----------------------------------
+set check_signatures=enforce
+export check_signatures
+set superusers=”root”
+export superusers
+
+password_pbkdf2 root grub.pbkdf2.sha512.10000.TODO 
+
+TODO = password hash of superuser (root or main user)
+#grub-mkpasswd-pbkdf2 is the command
+
+Ex. 
+
+
+ONLY THE ONE BC YOU ONLY WANT ONE PERSON TO HAVE ACCESS TO YOUR BOOTLOADER
+—--------------------------------------------------------------------------------------
+
+sudo update-grub after applying changes
+
+
+Device files are files that represent whole disk drives which allows us to use them as if they were regular file, simplifying many tasks 
+
+Device files are stored in the /dev/ directory
+
+Very in depth 
+
+#CHECK FILE PERMISSIONS AND ONLY ALLOW READ WRITE (check default permissions and research ig)
+
+Forensics: dd if=/dev/{dev you want to read} skip {byte you want to start at} count={how far to go}
+
+Ex. # dd if=/dev/sda1 skip=3000 count=20
+
+
+A partition is a segment of a HDD, while you can install an OS on one single HDD, there are benefits to doing it across multiple partitions
+
+You can install multiple OSes on a HDD
+Filesystem corruption is limited to one partition, so you can avoid losing a whole drive
+You can prevent runaway processes from consuming the whole HDD.
+
+
+
+df -h
+Check data usage on filesystem and partitions
+mount /dev/sda[#]
+Mount a partition
+unmount /dev/sda[#]
+Unmount a partition
+fdisk /dev/sda 
+manipulate a partition look at the man page for delete add, etc\
+
+#CHECK FOR MALICIOUS FILES BY MOUNTING AN UNMOUNTED PARTITION?
+#DELETE BAD PARTITION?
+
+UUID = unique universal identifier; cannot be changed, can be used to call upon a specific file system to partition instead of the generic device file.
+
+Mount point = where the filesystem is mounted or where you can access the files stored on the device (ex. /mnt/moonshine) 
+
+#CHECK FOR MALICIOUS FILES AND BAD PERMISSIONS
+
+Type = ext4,swap, etc. 
+
+
+Options = modifiers and permissions on a drive (nouser, exec, noauto)
+
+auto/noauto = specify which partitions should be automatically mounted on boot
+
+exec/noexec = Specifies whether the partition can execute binaries (noexec safer)
+
+ro/rw: “read only” = other users that aren’t root can only read the filesystem
+	“Read write”= other users can write to the filesystem (consider disabling based on file)
+
+nouser/user: Gives user unmount/mount privileges (user implies noexec)
+
+suid/nosuid- Permit/Block the operation of suid, and sgid bits (nosuid better)
+defaults = rw,suid,dev,exec,auto,nouser,async
+
+SECURE MODIFIERS =  
+
+auto for regular partition
+noauto for additional partitions
+Noexec is always safer
+rw/ro depends on the partition and README
+nouser
+nosuid
+
+
+HAVE ROOT “/” in /etc/fstab AS  “0 1” for the ending numbers (checks drive for errors)

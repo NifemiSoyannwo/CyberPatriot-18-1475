@@ -1,0 +1,556 @@
+CHECK FOR USERS LIKE URGOT (hidden with a uuid of less than 1000 and also /bin/false, etc.)
+
+Password script BROKEN.
+
+gui settings power, suspend after like 10 minutes of inactivity
+
+whereis = cracked way to find files
+
+Ports could be fake. Port 22 might show as running ssh, but it might not be doing that. (check it). 
+
+nmap -sV -p0-65535 reveals ports beyond the top 1000 (VERY USEFUL, IT FOUND TORNADO)
+
+check /etc/shells for unauthorized shells?
+
+Check /etc/pam.d/su
+	Uncomment “auth required pam_wheel.so deny group = nosu” 
+
+Configure /etc/login.defs
+	Uncomment “SU_WHEEL_ONLY”
+
+https://docs.google.com/document/d/1SGJS4HXLdgls7ZRoEwdSAmA97xl4M6GrbWuCarXkA6U/edit
+
+OPENVPN CONFS
+check for sus directories?
+/etc/udisks2/udisks2.conf should have autostart as mode?
+BACKUP AND THOSE GUI CONFIGS AGAIN
+make sudoers.d empty?
+require root password for recovery mode?
+https://www.acunetix.com/blog/web-security-zone/hardening-nginx/
+
+find a way to check for hard links? also symlinks/soft links
+--> for hard links maybe check if any files have the same inode number? Check out stack overflow later.
+--> https://www.lostsaloon.com/technology/how-to-find-all-hard-links-to-a-file-in-linux/ <-- CHECK OUT AND DEFINITELY SCRIPT BC THIS IS PAINFUL
+
+CHECK FOR "t" Stickybit in any directory
+--> ls -l | grep *******t kinda thing? or find the suid part of the script and do it
+
+set /var/tmp and /tmp directories with the permissions: 1777
+--> chmod 1777 /tmp
+--> chmod 1777 /var/tmp
+
+If a user has a groupid of a certain group, they have special permissions over any filesused by that group
+
+--> CHOWN IMPORTANT FILES AS ROOT? (check files for bad owners?)
+--> CHGRP IMPORTANT FILES AS ROOT? (check files for bad group owners)
+
+use "pstree" to see parent processes and child processes, make it easier to catch something malicious
+make sure system accounts ( not users ) have an * as their passwd
+use `w` for forensics and check which users are currently logged in
+USE SLAY FOR USERS
+use `id` to list all groups and uids DEF CHECK THIS OUT?
+
+Use top to check for cpu and ram intensive processes and terminate them (press K in top and follow prompts)
+For checking RAM usage, use free -g -s 4
+
+Check /var/tmp and /tmp for dangerous files, reboot to delete if you need to.
+
+lsusb, lspci : look for bad devices.
+fdisk -l <device name> to list info about a partition
+ls /dev/sd* and check for bad devices?
+
+umount to unmount something
+check /media and /mnt
+Check ~/.ssh/known_hosts for weird hosts
+
+ps -u (user) to list out all processes for a singular user
+ps -aux --forest does ps -aux and lists the output as a tree of pparent and child processes
+
+
+https://github.com/Ryan-Galligher/CyberPatriot/blob/master/CyberPatriotScript
+REALLY GOOD SCRIPT TAKE SOME PARTS FROM HERE^
+
+check /proc/cmdline to check for commands run when system was first booted
+check /proc/meminfo to check for excess use of memory by a process maybe?
+DEFINITELY CHECK --> /proc/modules: modules loaded in the kernel to add extra functionality (might be really harmful if theres a shell or something)
+
+find "$DIRECTORY" -perm /u=s,g=s
+
+Run ifconfig eth0 up
+Make sure 'route' command sends packets to the router?
+
+
+chmod 777 /etc/grub.d
+cat /etc/gdm3/greeter.dconf-defaults | grep disable-user-list', 'true'
+'cat /etc/host.conf | grep nospoof', 'on'
+  --> nospoof on is depricated
+
+sudo chmod 644 -R /*/*.conf
+
+COMPARE ALL BIN FILES 
+MANUALLY CHECK "Bad files".txt thingy
+
+###########################################################
+
+dpkg -l | grep -w rc                            #THESE ARE BAD PACKAGES THAT ARE WEIRD APPARENTLY; removed with configs present 
+ 
+https://linuxprograms.wordpress.com/2010/05/12/remove-packages-marked-rc/
+
+###########################################################
+
+do mysql config (in basefiles already; print to another file :| )
+
+kill processess after detecting backdoors
+
+grep -v 631?
+
+
+
+MAYBE DO A HUGEEEEEEEEEEEEEE MANUAL CHECK NEXT COMP YOUR SCRIPT FORGOT A LOT OF STUFF
+
+/etc/hosts.bind ALL:PARANOID
+remove icecast? nginx?
+CHECK FOR DUPLICATE /etc/passwd files
+MAYBE CHECK FOR .txt IN HOME DIRECTORIES???????
+/etc/fuse.conf should have #allow_other_root commented
+make script nano /etc/gdm3 stuff
+pam.conf empty?
+
+/etc/sysctl.d stuff?
+/etc/ufw check some config file and other stuff
+default package manager should be apt
+uninstall snap?
+
+#########################################################################################################################
+In order to allow the root account login in GUI, we have to modify the following two files.
+
+/etc/gdm3/custom.conf
+/etc/pam.d/gdm-password
+Use any text editor to modify these files.
+
+Edit /etc/gdm3/custom.conf file, and add the following line in the [security] directive and save the file.
+
+AllowRoot=true
+
+DO OPPOSITE OF THIS
+
+#########################################################################################################################
+
+
+#########################################################################################################################
+
+Now open and edit file /etc/pam.d/gdm-password. Add # character in the starting of the following line to make it commented. The commented line will not be executed when the system runs the specified executable file.
+
+auth required pam_succeed_if.so user != root quiet_success
+
+SO UNCOMMENT
+
+
+#########################################################################################################################
+
+invalid login shells and stuff
+BAD PACKAGES MAYBE
+LEARN HOW TO DO MYSQL AND LOOK/MANIPULATE STUFF IN MYSQL DATABASE
+
+CHECK /etc/gdm and other gdm stuff in etc for sus stuff
+
+check /usr/games and just /usr in general.
+/etc/shells
+
+Manually configure samba.conf bc script isnt ready yet
+
+CHECK FOR BAD PDFS BUT DONT DELETE USING THE SCRIPT?
+
+debsums -c for poisoned binary
+
+Check netstat -i for high TX-ERR,fix if possible
+
+check /etc/skel and remove all the files from all users if present
+
+https://github.com/Turb0Yoda/CyberPatriot-Scripts/blob/master/harden.sh
+
+https://github.com/Jsitech/JShielder/blob/master/UbuntuServer_18.04LTS/jshielder.sh
+
+LOOK INTO THIS STUFF IT HAS SOME FILE PERMISSION STUFF ^^^^
+
+https://github.com/Jsitech/JShielder/blob/master/UbuntuServer_18.04LTS/jshielder-CIS.sh
+
+DEF LOOK AT COMMENTS ^^^^^^^^
+
+check for zips (DEF CHECK NOT ADD DIRECTLY TO REMOVE SCRIPT)
+
+Poisoned files 
+
+https://www.sandflysecurity.com/blog/detecting-linux-binary-file-poisoning/
+
+https://upcloud.com/community/tutorials/scan-ubuntu-server-malware/
+
+COMMADS FROM HERE ^
+
+apt-get install auditd
+	  #install auditing program
+	auditctl -e 1
+	  #Enable audits
+	gedit /etc/audit/auditd.conf
+	  #view and modify policies as needed
+
+
+look in /var/log/apache2 stuff to firewall block from specific ip
+grep -rRwFins "string" to find string in a thing
+bluetooth visibility off
+Language support gui?
+require encryption password for backup?
+check gui in general
+gui firewall
+bluetooth visibility gui?
+online accounts gui?
+def check out user accounts gui
+Turn on backups? gui
+DETAILS GUI CHECK ALL SETTINGS IMPORTANT
+
+
+PHP LAB
+
+Grant and delete admin priveleges on the mysql database
+
+look at apache 2 stuff
+	conf-available
+	conf-enabled
+	mods-available
+	mods-enabled
+	sites-available
+	sites-enabled     <----------- def check this
+
+/etc/php/7.0/cli/php.ini? LOOK AT PHP VERSION 
+
+LOOK AT ALL MYSQL AND STUFF 
+LOOK AT LAB
+
+review some of this:
+https://docs.google.com/document/d/1xy_1_Yvkl3f392iD_zV_G_2cig8EciBW/edit
+
+look in /usr/share/applications
+
+cd /home; grep -rRwF --exclude /etc --exclude *.config "(text to search for)" | grep -v '\.' > /home/$CUSER/Desktop/weirdfiles.txt; grep -rRwF --exclude /etc --exclude *.config "(text to search for)" |  grep txt >> /home/eelric/Desktop/weirdfiles.txt ; cd /root;  grep -rRwF --exclude /etc --exclude *.config "(text to search for)" | grep -v '\.' >> /home/$CUSER/Desktop/weirdfiles.txt; grep -rRwF --exclude /etc --exclude *.config "(text to search for)" |  grep txt; cd /usr/share;   grep -rRwF --exclude /etc --exclude *.config "(text to search for)" | grep -v '\.' >> /home/$CUSER/Desktop/weirdfiles.txt; grep -rRwF --exclude /etc --exclude *.config "(text to search for)" |  grep txt >> /home/eelric/Desktop/weirdfiles.txt; cd /sbin; grep -rRwF --exclude /etc --exclude *.config "(text to search for)" | grep -v '\.' > /home/$CUSER/Desktop/weirdfiles.txt; grep -rRwF --exclude /etc --exclude *.config "(text to search for)" |  grep txt >> /home/eelric/Desktop/weirdfiles.txt; cat /home/$CUSER/Desktop/weirdfiles.txt
+
+ ^ split by :
+
+fix pam
+
+search /usr/share for suspicious files from users
+
+smb.conf needs to be fixed by editing user groups and such
+
+ss -l for backdoors?
+
+/etc/rc.local manual inspection
+/var/spool/cron/crontabs
+/etc/ftpusers for disallowed ftp users
+/etc/bluetooth/main.conf dont allow pairable forever
+
+
+check /etc/group for nopasswdlogin
+
+/etc/bluetooth/input.conf
+#-----------------------------------------------#
+# Configuration file for the input service
+
+# This section contains options which are not specific to any
+# particular interface
+[General]
+
+# Set idle timeout (in minutes) before the connection will
+# be disconnect (defaults to 0 for no timeout)
+#IdleTimeout=30
+#-----------------------------------------------#
+
+/etc/bluetooth/network.conf
+#-----------------------------------------------#
+# Configuration file for the network service
+
+[General]
+
+# Disable link encryption: default=false
+DisableSecurity=false
+#-----------------------------------------------#
+
+rfcomm.conf
+#-----------------------------------------------#
+make sure bind no; is uncommented
+#-----------------------------------------------#
+
+Compare this /etc/bash.bashrc file to the one in cypat, check for suspicious things:
+
+#-------------------------------------------------------#
+# System-wide .bashrc file for interactive bash(1) shells.
+
+# To enable the settings / commands in this file for login shells as well,
+# this file has to be sourced in /etc/profile.
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, overwrite the one in /etc/profile)
+PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+
+# Commented out, don't overwrite xterm -T "title" -n "icontitle" by default.
+# If this is an xterm set the title to user@host:dir
+#case "$TERM" in
+#xterm*|rxvt*)
+#    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+#    ;;
+#*)
+#    ;;
+#esac
+
+# enable bash completion in interactive shells
+#if ! shopt -oq posix; then
+#  if [ -f /usr/share/bash-completion/bash_completion ]; then
+#    . /usr/share/bash-completion/bash_completion
+#  elif [ -f /etc/bash_completion ]; then
+#    . /etc/bash_completion
+#  fi
+#fi
+
+# sudo hint
+if [ ! -e "$HOME/.sudo_as_admin_successful" ] && [ ! -e "$HOME/.hushlogin" ] ; then
+    case " $(groups) " in *\ admin\ *)
+    if [ -x /usr/bin/sudo ]; then
+	cat <<-EOF
+	To run a command as administrator (user "root"), use "sudo <command>".
+	See "man sudo_root" for details.
+	
+	EOF
+    fi
+    esac
+fi
+
+# if the command-not-found package is installed, use it
+if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-not-found ]; then
+	function command_not_found_handle {
+	        # check because c-n-f could've been removed in the meantime
+                if [ -x /usr/lib/command-not-found ]; then
+		   /usr/lib/command-not-found -- "$1"
+                   return $?
+                elif [ -x /usr/share/command-not-found/command-not-found ]; then
+		   /usr/share/command-not-found/command-not-found -- "$1"
+                   return $?
+		else
+		   printf "%s: command not found\n" "$1" >&2
+		   return 127
+		fi
+	}
+fi
+#-----------------------------------------------------#
+
+
+check all crons in /etc and definitely check /var/spool/cron
+
+
+debconf.conf file
+#----------------------------------------------------------------#
+# This is the main config file for debconf. It tells debconf where to
+# store data. The format of this file is a set of stanzas. Each stanza
+# except the first sets up a database for debconf to use. For details, see
+# debconf.conf(5) (in the debconf-doc package).
+#
+# So first things first. This first stanza gives the names of two databases.
+
+# Debconf will use this database to store the data you enter into it,
+# and some other dynamic data.
+Config: configdb
+# Debconf will use this database to store static template data.
+Templates: templatedb
+
+# World-readable, and accepts everything but passwords.
+Name: config
+Driver: File
+Mode: 644
+Reject-Type: password
+Filename: /var/cache/debconf/config.dat
+
+# Not world readable (the default), and accepts only passwords.
+Name: passwords
+Driver: File
+Mode: 600
+Backup: false
+Required: false
+Accept-Type: password
+Filename: /var/cache/debconf/passwords.dat
+
+# Set up the configdb database. By default, it consists of a stack of two
+# databases, one to hold passwords and one for everything else.
+Name: configdb
+Driver: Stack
+Stack: config, passwords
+
+# Set up the templatedb database, which is a single flat text file
+# by default.
+Name: templatedb
+Driver: File
+Mode: 600
+Filename: /var/cache/debconf/templates.dat
+
+# Well that was pretty straightforward, and it will be enough for most
+# people's needs, but debconf's database drivers can be used to do much
+# more interesting things. For example, suppose you want to use config 
+# data from another host, which is mounted over nfs or perhaps the database
+# is accessed via LDAP. You don't want to write to the remote debconf database,
+# just read from it, so you still need a local database for local changes.
+#
+# A remote NFS mounted database, read-only. It is optional; if debconf
+# fails to use it it will not abort.
+#Name: remotedb
+#Driver: DirTree
+#Directory: /mnt/otherhost/var/cache/debconf/config
+Readonly: true
+Required: false
+#
+# A remote LDAP database. It is also read-only. The password is really
+# only necessary if the database is not accessible anonymously.
+# Option KeyByKey instructs the backend to retrieve keys from the LDAP
+# server individually (when they are requested), instead of loading all
+# keys at startup. The default is 0, and should only be enabled if you
+# want to track accesses to individual keys on the LDAP server side.
+#Name: remotedb
+#Driver: LDAP
+#Server: remotehost
+#BaseDN: cn=debconf,dc=domain,dc=com
+#BindDN: uid=admin,dc=domain,dc=com
+#BindPasswd: secret
+#KeyByKey: 0
+#
+# A stack consisting of two databases. Values will be read from
+# the first database in the stack to contain a value. In this example,
+# writes always go to the first database.
+#Name: fulldb
+#Driver: Stack
+#Stack: configdb, remotedb
+#
+# In this example, we'd use Config: fulldb at the top of the file
+# to make it use the combination of the databases.
+#
+# Even more complex and interesting setups are possible, see the 
+# debconf.conf(5) page for details.
+#----------------------------------------------------------------------#
+
+
+add to /etc/dhclient.conf :
+
+#-------------------------
+default-lease-time 600;
+max-lease-time 7200;
+#------------------------
+
+Check /etc/network/interfaces
+
+
+change /etc/fuse.conf to: MAKE SURE TO HAVE "user_allow_other" commented
+#---------------------------------------------------------------------------#
+# /etc/fuse.conf - Configuration file for Filesystem in Userspace (FUSE)
+
+# Set the maximum number of FUSE mounts allowed to non-root users.
+# The default is 1000.
+#mount_max = 1000
+
+# Allow non-root users to specify the allow_other or allow_root mount options.
+#user_allow_other
+#----------------------------------------------------------------------------#
+
+
+From the Gnome Panel, click System->Preferences->Removable Drives and Media
+and then uncheck the first two boxes on the storage tab. This will turn off
+automounting for everything not defined in /etc/fstab, and you can turn it 
+back on if desired as easily.
+
+Make sure /etc/gdb is clean
+make sure /etc/gdbinit
+
+check /etc/grub.d/README for suspicious files
+
+List and configure startup processes? sysv-rc-conf --list command
+
+check /etc/skel for weird files (might add malicious files to home directory of any new users created)
+
+bashrc
+
+
+
+sudo apt-get --purge autoremove four-in-a-row -y > /dev/null 2>&1
+sudo apt-get --purge autoremove freeciv -y > /dev/null 2>&1
+sudo apt-get --purge autoremove hitori -y > /dev/null 2>&1
+sudo apt-get --purge autoremove iagno -y > /dev/null 2>&1
+sudo apt-get --purge autoremove hoichess -y > /dev/null 2>&1
+sudo apt-get --purge autoremove lightsoff -y > /dev/null 2>&1
+sudo apt-get --purge autoremove swell-foop -y > /dev/null 2>&1
+sudo apt-get --purge autoremove aisleriot -y > /dev/null 2>&1
+sudo apt-get --purge autoremove bind9 -y > /dev/null 2>&1
+sudo apt-get --purge autoremove bind9-host -y > /dev/null 2>&1
+sudo apt-get --purge autoremove zeya -y > /dev/null 2>&1
+sudo apt-get --purge autoremove yaws -y > /dev/null 2>&1
+sudo apt-get --purge autoremove thin -y > /dev/null 2>&1
+sudo apt-get --purge autoremove pdnsd -y > /dev/null 2>&1
+sudo apt-get --purge autoremove dns2tcp -y > /dev/null 2>&1
+sudo apt-get --purge autoremove gdnsd -y > /dev/null 2>&1
+sudo apt-get --purge autoremove ldap2dns -y > /dev/null 2>&1
+sudo apt-get --purge autoremove ophcrack -y > /dev/null 2>&1
+sudo apt-get --purge autoremove nmap -y > /dev/null 2>&1
+sudo apt-get --purge autoremove netris -y > /dev/null 2>&1
+sudo apt-get --purge autoremove maradns -y > /dev/null 2>&1
+sudo apt-get --purge autoremove minetest -y > /dev/null 2>&1
+sudo apt-get --purge autoremove nsd -y > /dev/null 2>&1
+sudo apt-get --purge autoremove nsd3 -y > /dev/null 2>&1
+sudo apt-get --purge autoremove zentyal-dns -y > /dev/null 2>&1
+sudo apt-get --purge autoremove mailutils-imap4d -y > /dev/null 2>&1
+sudo apt-get --purge autoremove dovecot-pop3 -y > /dev/null 2>&1
+sudo apt-get --purge autoremove dovecot-imapd -y > /dev/null 2>&1
+sudo apt-get --purge autoremove cyrus-imapd -y > /dev/null 2>&1
+sudo apt-get --purge autoremove cyrus-pop3 -y > /dev/null 2>&1
+sudo apt-get --purge autoremove sendmail -y > /dev/null 2>&1
+sudo apt-get --purge autoremove postfix -y > /dev/null 2>&1
+sudo apt-get --purge autoremove sqwebmail -y > /dev/null 2>&1
+sudo apt-get --purge autoremove armagetronad -y > /dev/null 2>&1
+sudo apt-get --purge autoremove snmpd -y > /dev/null 2>&1
+sudo apt-get --purge autoremove postgresql -y > /dev/null 2>&1
+sudo apt-get --purge autoremove snmptt -y > /dev/null 2>&1
+sudo apt-get --purge autoremove snmptrapfmt -y > /dev/null 2>&1
+sudo apt-get --purge autoremove audacious -y > /dev/null 2>&1
+sudo apt-get --purge autoremove remmina -y > /dev/null 2>&1
+sudo apt-get --purge autoremove remmina-common -y > /dev/null 2>&1
+sudo apt-get --purge autoremove deluge -y > /dev/null 2>&1
+sudo apt-get --purge autoremove slapd -y > /dev/null 2>&1
+sudo apt-get --purge autoremove iodine -y > /dev/null 2>&1
+sudo apt-get --purge autoremove tightvncserver -y > /dev/null 2>&1
+sudo apt-get --purge autoremove telnet -y > /dev/null 2>&1
+sudo apt-get --purge autoremove ayttm -y > /dev/null 2>&1
+sudo apt-get --purge autoremove empathy -y > /dev/null 2>&1
+sudo apt-get --purge autoremove logkeys -y > /dev/null 2>&1
+sudo apt-get --purge autoremove p0f -y > /dev/null 2>&1
+sudo apt-get --purge autoremove openarena -y > /dev/null 2>&1
+sudo apt-get --purge autoremove netcat -y > /dev/null 2>&1
+sudo apt-get --purge autoremove netcat-openbsd -y > /dev/null 2>&1
+sudo apt-get --purge autoremove ettercap -y > /dev/null 2>&1
+sudo apt-get --purge autoremove wireshark -y > /dev/null 2>&1
+sudo apt-get --purge autoremove nginx -y > /dev/null 2>&1
+sudo apt-get --purge autoremove mongodb -y > /dev/null 2>&1
+sudo apt-get --purge autoremove mariadb -y > /dev/null 2>&1
+sudo apt-get --purge autoremove sqlite -y > /dev/null 2>&1
+sudo apt-get --purge autoremove citadel-server -y > /dev/null 2>&1
+sudo apt-get --purge autoremove nagios3 -y > /dev/null 2>&1
+sudo apt-get --purge autoremove squid3 -y > /dev/null 2>&1
+sudo apt-get --purge autoremove znc -y > /dev/null 2>&1
+sudo apt-get --purge autoremove ircd-irc2 -y > /dev/null 2>&1
+sudo apt-get --purge autoremove ircd-ircu -y > /dev/null 2>&1
+sudo apt-get --purge autoremove ircd-hybrid -y > /dev/null 2>&1
+sudo apt-get --purge autoremove vino -y > /dev/null 2>&1
+sudo apt-get --purge autoremove Rdesktop -y > /dev/null 2>&1
+sudo apt-get --purge autoremove Vinagre -y > /dev/null 2>&1

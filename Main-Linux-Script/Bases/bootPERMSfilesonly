@@ -1,0 +1,5 @@
+total 
+-rw-r--r-- config-5.10.0-8-amd64
+-rw-r--r-- initrd.img-5.10.0-8-amd64
+-rw-r--r-- System.map-5.10.0-8-amd64
+-rw-r--r-- vmlinuz-5.10.0-8-amd64

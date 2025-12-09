@@ -1,0 +1,92 @@
+
+#-------------------------------------------------------------------------
+#awk '!a[$0]++' CHECKTHISfixedlistofpossiblebadstuff.txt
+https://askubuntu.com/questions/48886/how-do-i-list-the-default-installed-packages
+
+Possible backdoor files (Still need to cover LISTENING STUFF)
+#----------------------------------------------------------------------------------------------
+find / -type f -name "*.pl" 2> /dev/null | grep -vF "/usr"
+find / -type f -name "*.s" 2> /dev/null | grep -vF "/usr"
+find / -type f -name "*.S" 2> /dev/null | grep -vF "/usr"
+find / -type f -name "*.asm" 2> /dev/null | grep -vF "/usr"
+find / -type f -name "*.py" 2> /dev/null | grep -vF "/usr" | grep -v /snap
+find / -type f -name "*.sh" 2> /dev/null | grep -vF "/usr" | grep -v /snap | grep -v /etc
+find / -type f -name "*.rb" 2> /dev/null
+find / -type f -name "*.c" 2> /dev/null | grep -v /usr | grep -v /snap
+find / -type f -name "*.js" 2> /dev/null | grep -v /usr | grep -v /snap | grep -v /etc
+#----------------------------------------------------------------------------------------------
+
+
+sudo apt-get install chkrootkit ufw clamav rkhunter selinux tree auditd bum htop libpam-cracklib symlinks\
+echo "--------------------------------------------"
+			echo "--------------------------------------------"
+			echo "FILES IN USE"
+			#shows files open in memory
+		lsof  -i -n -P
+			echo "--------------------------------------------"
+			echo "--------------------------------------------"
+			echo "SOCKETS IN USE"
+			#shows open sockets
+		sudo ss -pwult | column -t
+			echo "--------------------------------------------"
+			echo "--------------------------------------------"
+			ECHO "NETSTAT tulpn"
+			#same as netstat -anob on Windows
+   		netstat -tulpn
+   			echo "--------------------------------------------"
+			echo "--------------------------------------------"
+			echo "VIEW RUNNING DAEMONS"
+			#view running services
+   		ps -C "$(xlsclients | cut -d' ' -f3 | paste - -s -d ',')" --ppid 2 --pid 2 --deselect -o tty,uid,pid,ppid,args | grep ^?
+   			echo "--------------------------------------------"
+			echo "--------------------------------------------"
+			echo "UNOWNED FILES/PROCESSES"
+			echo "If anything comes up below, it tends to be bad"
+			#LOL
+		ps -eZ | egrep "initrc" | egrep -vw "tr|ps|egrep|bash|awk" | tr ':' ' ' | awk '{ print $NF }'
+    
+    
+    sudo auditctl –e 1 
+    CHECK AUDITCTL STUFF
+    
+    sed -i -e 's/SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
+		sed -i -e 's/SELINUXTYPE=.*/SELINUXTYPE=mls/' /etc/selinux/config
+		sudo nano /etc/selinux/config 
+    
+    sudo nano /etc/profile
+		sudo nano /etc/bashrc
+		sudo ls -a /etc/profile.d>>~/bashprofile.txt
+    sudo nano /etc/avahi/avahi-daemon.conf
+    #To disable ftp, edit the file /etc/xinetd.d/wu-ftpd, and set the field labeled disable to yes.
+    	cd /etc/rc.d/init.d
+  		./xinted reload
+      
+      sudo nano /etc/motd
+  		sudo nano /etc/issue
+  		sudo nano /etc/issue.net
+  			# "remove any instances of \m, \r, \s, or \v." \
+        
+        sudo nano /etc/default/rsync
+
+#!/bin/bash
+
+# Define binary folders
+folders=(/bin /sbin /usr/sbin /usr/bin /var/sbin /var/bin)
+
+# Define default file list for Ubuntu 22.04
+default_files=$(dpkg -L ubuntu-minimal | grep -E "/(bin|sbin)/")
+
+# Iterate through binary folders
+for folder in "${folders[@]}"; do
+  # Check files in folder
+  for file in $(ls $folder); do
+    # Check file permissions
+    if [ $(stat -c "%a" "$folder/$file") -gt 755 ]; then
+      echo "$folder/$file has insecure permissions"
+    fi
+    # Check if file is in default installation
+    if ! echo "$default_files" | grep -q "$folder/$file"; then
+      echo "$folder/$file is not in default installation"
+    fi
+  done
+done

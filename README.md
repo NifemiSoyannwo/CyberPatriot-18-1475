@@ -7,28 +7,38 @@ For Linux and Windows
 
 ## File Structure
 ```
-CyberPatriot=18-1475
-├───.idea
+CyberPatriot-18-1475
 ├───Linux
-│   ├───Benchmarks
-│   ├───Checklists + Unofficial Answer Keys
-│   ├───Official Answer Keys (CyberPatriot)
-│   ├───Resources
+│   ├───Checklists+Unofficial-Answer-Keys
+│   ├───CIS-Benchmarks
+│   ├───Official-Answer-Keys
+│   ├───Script-Snapshots
+│   │   ├───From-CyberPatriot-Scripts
+│   │   ├───From-CyberPatriotLinux
+│   │   ├───From-CYPA-Script
+│   │   ├───From-Galligher-CP
+│   │   ├───From-PatriotWare
+│   │   └───From-Ponkio-CP
 │   └───Scripts
-│       ├───Mint 21
-│       ├───Reference Scripts
-│       └───Ubuntu 24
+│       ├───Mint21
+│       └───Ubuntu24
 ├───Server
-│   ├───Benchmarks
-│   ├───Checklists + Unofficial Answer Keys
-│   ├───Official Answer Keys (CyberPatriot)
-│   ├───Resources
+│   ├───Checklists+Unofficial-Answer-Keys
+│   ├───CIS Benchmarks
+│   ├───Official-Answer-Keys
+│   ├───Script-Snapshots
+│   │   ├───From-CIS-MS-Serv2019
+│   │   ├───From-CPWindowsScripts
+│   │   ├───From-CPXV-Scripts
+│   │   ├───From-CyberPatriot-Scripts
+│   │   ├───From-PatriotWare
+│   │   └───From-Ponkio-CP
 │   └───Scripts
-│       ├───Reference Scripts
 │       ├───Server 19
 │       └───Server 22
-├───Server & Linux
-└───Vulnerability Categories
+├───Server+Linux
+└───Vulnerability-Categories
+
 ```
 
 

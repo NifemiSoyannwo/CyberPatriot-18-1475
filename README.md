@@ -62,16 +62,23 @@ Server Script Links:
 - https://github.com/AwSkies/CPWindowsScripts/blob/master/secure.bat
 - secure.bat & maybe readme (nothing needed, still short)
 - https://github.com/ProgrammerManan/CyberPatriot-Scripts/tree/main/CIS-serv2019-v3.0.1
-  - 
+  - might need whole deployment folder & whole hardening folder & entire master script
+  - might actually need whole thing
 - https://github.com/Happygator/CIS-Microsoft-Windows-Server-2019-Benchmark/blob/master/CIS_WinSrv2019.ps1
+  - only take script.
 
 Linux Script LInks:
 - https://github.com/ponkio/CyberPatriot/blob/master/Linux_Ubuntu.sh
+  - Linux.Ubuntu.sh
 - https://github.com/BiermanM/CyberPatriot-Scripts/blob/master/README.md (SAME NAME, DOES NOT COPY)
+  - Take Ubuntu.sh and mint.sh
 - https://github.com/Ryan-Galligher/CyberPatriot/blob/master/CyberPatriotScript
+  - just take the CyberPatriotScript file, which is basically the only thing on there
 - https://github.com/purujain2006/CyberPatriotLinux/blob/main/main.sh
+  - keep every top-level file
 - https://github.com/ericwang0533/CYPA-Script/blob/master/script.sh
-- https://github.com/maytees/cypat-ubuntu-script/blob/master/README.md
+  - just keep the script.sh (its basically the only file)
+
 
 Linux & Windows Links
 - https://github.com/lkotlus/PatriotWare/tree/main/Windows
